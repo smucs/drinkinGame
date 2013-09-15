@@ -1,48 +1,69 @@
 #include<stdio.h>
 
-int main(void)
+//define TRUE & FALSE
+#define TRUE 1
+#define FALSE 0
+
+//change to 1 to remove debug code 
+#define DEBUG TRUE
+
+// *** END STATES ***
+#define OK 0
+#define ERROR 1
+
+
+int main(int argc, char* argv[])
 {
-	int endState =0;
+	int endState = OK;
 
 	printf("Put in the amount of players fool!\n");
 	unsigned int playerCount;
 	scanf("%d",&playerCount);
 
 	printf("Enter maximum bet amount.\n");
-	int maxBet;
-	scanf("%d",&maxBet);
+	float maxBet;
+	scanf("%f",&maxBet);
 
-	//int temp =0;todo:Put back in once diagnostic on todo:1 is removed.
-	float tempFloat =0;//todo1:Remove on release.
-	int tempInt =0;
-	int totalBet = 0;
+	//int temp =0; todo:Put back in once diagnostic on todo:1 is removed.
+	//WTF?
+        float tempFloat = 0.0f; //todo1:Remove on release.
+	float bet;
+	float totalBet = 0.0f;
+        float averageBet; 
 	for(unsigned int i=0;i<playerCount;i++)
 	{
 		printf("Player %d, put in your bet!\n",i+1);
-		scanf("%d",&tempInt);
+		scanf("%f",&bet);
 
-		while(tempInt>maxBet)
+		while(bet>maxBet)
 		{
 			printf("Bet too high, try again you drunk twat XD\n");
-			scanf("%d",&tempInt);
+			scanf("%d",&bet);
 		}
-		printf("DIAGNOSTIC: totalBet is %d.\n",totalBet);//todo:Remove on release.
-		totalBet += tempInt;
-		printf("DIAGNOSTIC: totalBet is %d.\n",totalBet);//todo:Remove on release.
+		if(DEBUG) printf("DIAGNOSTIC: totalBet is %.2f.\n",totalBet);//will compile out
+		totalBet += bet;
+		if(DEBUG) printf("DIAGNOSTIC: totalBet is %.2f.\n",totalBet);//will compile out
 	}
-	printf("DIAGNOSTIC: totalBet is %d.\n",totalBet);//todo:Remove on release.
-	float averageBet = totalBet/playerCount;
-	printf("DIAGNOSTIC: averageBet is %f.\n",averageBet);//todo:Remove on release.
-	printf("DIAGNOSTIC: totalBet is %d.\n",totalBet);//todo:Remove on release.
-	//rounds down to accomodate odd number for totalBet, 
+
+        averageBet = totalBet / playerCount;
+
+	if(DEBUG) printf("DIAGNOSTIC: totalBet is %.2f.\n",totalBet);//will compile out
+	if(DEBUG) printf("DIAGNOSTIC: averageBet is %.2f.\n",averageBet);//will compile out
+	if(DEBUG) printf("DIAGNOSTIC: totalBet is %.2f.\n",totalBet);//will compile out
+	
+        //rounds down to accomodate odd number for totalBet, 
 	//need to pour one more shot if ((playerCount == EVEN) && averageBet/(totalBet == ODD))
-	for(unsigned int i=0;i<playerCount;i++)
+	
+	int tempInt;
+
+        for(unsigned int i=0;i<playerCount;i++)
 	{
-		printf("DIAGNOSTIC: Current Average Bet is %4.2f\n",averageBet);//todo:Remove on release.
+		if(DEBUG) printf("DIAGNOSTIC: Current Average Bet is %4.2f\n",averageBet);//will compile out
 		tempFloat = averageBet*i;
 		tempInt = i+1;
-		printf("Rank %d drinks %f shots.\n",tempInt,tempFloat);
+		printf("Rank %d drinks %.1f shots.\n",tempInt,tempFloat);
 	}
-	scanf("%d");
+
+	scanf("%c");
 	return endState;
 }
